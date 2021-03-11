@@ -127,12 +127,11 @@ namespace doctor.Services
             return db.QuerySingle<int>(@"
                     insert into Registro
                     (Nombre, Apellido, Colonia, Domicilio, Emails, Telefono, TelefonoCel,
-                    CodigoPostal, idEstado, idCiudad, IdPais, FechaRegistro,
-                    Tipo, Status, CURP)
+                    CodigoPostal, idEstado, idCiudad, IdPais, FechaRegistro, Tipo, Status, CURP)
                     values
                     (@name, @lastName, @colony, @address, @email, @phone, @cellPhone,
-                    @cp, @stateId, @cityId, @countryId, @registrationDate,
-                    @type, @status, @curp)",
+                    @cp, @stateId, @cityId, @countryId, @registrationDate, @type, @status, @curp);
+                    select cast(scope_identity() as int)",
                     new
                     {
                         name = req.Name,
@@ -155,7 +154,7 @@ namespace doctor.Services
 
         private int InsertDoctor(ref IDbConnection db, ref IDbTransaction transaction, int registerId, RegisterReq req)
         {
-            return db.QuerySingle<int>(@"
+            return db.Execute(@"
                     insert into Medico
                     (IdRegistro, RFC, TelefonoConsultorio, DomicilioConsultorio, CertCMCP,
                     CedulaEspecialidad, NoRegSSA, AgrupacionLocal, AgrupacionNacional,

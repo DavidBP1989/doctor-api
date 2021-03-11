@@ -60,13 +60,13 @@ namespace doctor.Services
                 db.Open();
 
                 string emeci = GetEmeci(doctorId);
-                var lastEmeciFromPatient = db.Query(@"
+                var lastEmeciFromPatient = db.Query<string>(@"
                     select top(1) Emeci
-                    from vPatients where Emeci like '%@emeci%'
+                    from vPatients where Emeci like @emeci
                     order by RegistrationDate desc",
                     new
                     {
-                        emeci
+                        emeci = "%" + emeci + "%"
                     }).FirstOrDefault();
                 if (lastEmeciFromPatient != null)
                 {
@@ -174,7 +174,8 @@ namespace doctor.Services
                     FechaExpiracion, Emails, clave, Emeci)
                     values
                     (@name, @lastName, @phone, @type, @status, @registrationDate,
-                    @expirationDate, @email, @password, @emeci)",
+                    @expirationDate, @email, @password, @emeci);
+                    select cast(scope_identity() as int)",
                     new
                     {
                         name = req.Name,
@@ -196,7 +197,8 @@ namespace doctor.Services
                     insert into Paciente
                     (IdRegistro, Sexo, FechaNacimiento, NombreMadre, NombrePadre, AlergiaMedicina)
                     values
-                    (@registerId, @sex, @birthDate, @mothersName, @fathersName, @allergies)",
+                    (@registerId, @sex, @birthDate, @mothersName, @fathersName, @allergies);
+                    select cast(scope_identity() as int)",
                     new
                     {
                         registerId,
@@ -219,7 +221,6 @@ namespace doctor.Services
             var bfTimes = BaseFont.CreateFont(BaseFont.TIMES_ROMAN, BaseFont.CP1252, false);
             var fBold = new Font(bfTimes, 8, Font.NORMAL, BaseColor.BLACK);
 
-
             var pdfTable = new PdfPTable(2)
             {
                 TotalWidth = 500f,
@@ -231,7 +232,7 @@ namespace doctor.Services
             pdfTable.SetWidths(widths);
             pdfTable.DefaultCell.Border = Rectangle.NO_BORDER;
 
-            var file = $"{AppDomain.CurrentDomain.BaseDirectory}imgAccess.jpg";
+            var file = $"{AppDomain.CurrentDomain.BaseDirectory}Content\\imgAccess.jpg";
             var image = Image.GetInstance(ConvertImageToBytes(file, emeci));
             image.ScaleAbsolute(258f, 153f);
 
@@ -290,12 +291,13 @@ namespace doctor.Services
                     db.Execute(@"
                             insert into DatosTarjeta
                             (noTarjeta, Dato, Coordenada)
-                            values (@emeci, @dato, @coordinate)", new
-                    {
-                        emeci,
-                        dato,
-                        coordinate = $"{letter}{i}"
-                    }, transaction);
+                            values (@emeci, @dato, @coordinate)",
+                            new
+                            {
+                                emeci,
+                                dato,
+                                coordinate = $"{letter}{i}"
+                            }, transaction);
 
                     position.AddCell(new Phrase(dato, fBold));
                 }

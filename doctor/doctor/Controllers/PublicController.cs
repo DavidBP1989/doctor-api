@@ -48,7 +48,7 @@ namespace doctor.Controllers
             var fp = generalService.ForgotPassword(emeci);
             var result = new BasicResponse();
 
-            if (result != null && !string.IsNullOrEmpty(fp.Password) && !string.IsNullOrEmpty(fp.Email))
+            if (fp != null && !string.IsNullOrEmpty(fp.Password) && !string.IsNullOrEmpty(fp.Email))
             {
                 result.IsSuccess = true;
                 var emailService = new EmailService(fp.Email);

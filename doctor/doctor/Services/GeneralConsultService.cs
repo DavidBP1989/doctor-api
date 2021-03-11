@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using doctor.Database;
 using doctor.Models;
 using doctor.Models.Consults;
 using doctor.Models.Consults.General;
@@ -37,6 +38,7 @@ namespace doctor.Services
             }
         }
 
+
         #region saveConsult
         public BasicResponse SaveConsult(int doctorId, GeneralConsult req)
         {
@@ -58,19 +60,19 @@ namespace doctor.Services
                         int affectedRowConsult = InsertConsult(ref cn, ref trans,
                             doctorId, req.PatientConsult.PatientId.Value, now, req);
 
-                        int affectedRowRecipe = InsertRecipe(ref cn, ref trans,
+                        int affectedRowRecipe = InsertComplement(ref cn, ref trans, "Recetas",
                             doctorId, req.PatientConsult.PatientId.Value, affectedRowConsult,
                             now, req.Treatments);
 
-                        int affectedRowDiagnostics = InsertDiagnostics(ref cn, ref trans,
+                        int affectedRowDiagnostics = InsertComplement(ref cn, ref trans, "Diagnosticos",
                             doctorId, req.PatientConsult.PatientId.Value, affectedRowConsult,
                             now, req.Diagnostics);
 
-                        int affectedRowLab = InsertLabStudies(ref cn, ref trans,
+                        int affectedRowLab = InsertComplement(ref cn, ref trans, "EstudiosLab",
                             doctorId, req.PatientConsult.PatientId.Value, affectedRowConsult,
                             now, req.LaboratoryStudies);
 
-                        int affectedRowCab = InsertCabStudies(ref cn, ref trans,
+                        int affectedRowCab = InsertComplement(ref cn, ref trans, "EstudiosGab",
                             doctorId, req.PatientConsult.PatientId.Value, affectedRowConsult,
                             now, req.CabinetStudies);
 
@@ -141,13 +143,13 @@ namespace doctor.Services
                     }, transaction);
         }
 
-        private int InsertRecipe(ref IDbConnection db,
-            ref IDbTransaction transaction, int doctorId,
+        private int InsertComplement(ref IDbConnection db,
+            ref IDbTransaction transaction, string tableName, int doctorId,
             int patientId, int consultId, DateTime now,
-            List<string> treatments)
+            List<string> complement)
         {
             return db.QuerySingle<int>(@"
-                    insert into Recetas
+                    insert into " + tableName + @"
                     (idconsulta, idmedico, idpaciente, Fecha, Lineas)
                     values
                     (@consultId, @doctorId, @patientId, @now, @lines)",
@@ -157,71 +159,36 @@ namespace doctor.Services
                         doctorId,
                         patientId,
                         now,
-                        lines = SetLines(treatments)
-                    }, transaction);
-        }
-
-        private int InsertDiagnostics(ref IDbConnection db,
-            ref IDbTransaction transaction, int doctorId,
-            int patientId, int consultId, DateTime now,
-            List<string> diagnostics)
-        {
-            return db.QuerySingle<int>(@"
-                    insert into Diagnosticos
-                    (idconsulta, idmedico, idpaciente, Fecha, Lineas)
-                    values
-                    (@consultId, @doctorId, @patientId, @now, @lines)",
-                    new
-                    {
-                        consultId,
-                        doctorId,
-                        patientId,
-                        now,
-                        lines = SetLines(diagnostics)
-                    }, transaction);
-        }
-
-        private int InsertLabStudies(ref IDbConnection db,
-            ref IDbTransaction transaction, int doctorId,
-            int patientId, int consultId, DateTime now,
-            List<string> laboratoryStudies)
-        {
-            return db.QuerySingle<int>(@"
-                    insert into EstudiosLab
-                    (idconsulta, idmedico, idpaciente, Fecha, Lineas)
-                    values
-                    (@consultId, @doctorId, @patientId, @now, @lines)",
-                    new
-                    {
-                        consultId,
-                        doctorId,
-                        patientId,
-                        now,
-                        lines = SetLines(laboratoryStudies)
-                    }, transaction);
-        }
-
-        private int InsertCabStudies(ref IDbConnection db,
-            ref IDbTransaction transaction, int doctorId,
-            int patientId, int consultId, DateTime now,
-            List<string> cabinetStudies)
-        {
-            return db.QuerySingle<int>(@"
-                    insert into EstudiosGab
-                    (idconsulta, idmedico, idpaciente, Fecha, Lineas)
-                    values
-                    (@consultId, @doctorId, @patientId, @now, @lines)",
-                    new
-                    {
-                        consultId,
-                        doctorId,
-                        patientId,
-                        now,
-                        lines = SetLines(cabinetStudies)
+                        lines = SetLines(complement)
                     }, transaction);
         }
         #endregion
 
+
+        public GeneralConsult GetConsultById(int consultId)
+        {
+            using (IDbConnection db = new SqlConnection(connection))
+            {
+                db.Open();
+                var consult = db.Query<ConsultasRepository>(@"
+                        select *
+                        from Consultas
+                        where idconsulta = @consultId",
+                        new
+                        {
+                            consultId
+                        }).Select(x => new GeneralConsult
+                        { 
+                            
+                        });
+                if (consult != null)
+                {
+
+                }
+
+                return null;
+            }
+        }
 
         private string SetLines(List<string> lines)
         {

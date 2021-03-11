@@ -105,22 +105,22 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.Helpers.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.2\lib\net45\System.Web.Mvc.dll</HintPath>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.1.2\lib\net45\System.Web.Razor.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -146,6 +146,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\imgAccess.jpg" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -154,11 +155,17 @@
     <Compile Include="Controllers\GeneralConsultController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\PublicController.cs" />
+    <Compile Include="Database\ConsultasRepository.cs" />
     <Compile Include="Database\DatosTarjetaRepository.cs" />
     <Compile Include="Database\MedicoRepository.cs" />
     <Compile Include="Database\RegistroRepository.cs" />
     <Compile Include="Models\Auth\AuthModel.cs" />
     <Compile Include="Models\BasicResponse.cs" />
+    <Compile Include="Models\Consults\BasicConsult.cs" />
+    <Compile Include="Models\Consults\Consult.cs" />
+    <Compile Include="Models\Consults\ConsultationDates.cs" />
+    <Compile Include="Models\Consults\General\GeneralConsult.cs" />
+    <Compile Include="Models\Consults\PatientConsult.cs" />
     <Compile Include="Models\Doctor\BasicInfo.cs" />
     <Compile Include="Models\Doctor\Cities.cs" />
     <Compile Include="Models\Doctor\ForgotPassword.cs" />
@@ -177,6 +184,7 @@
     <Compile Include="Query\QueryableAttribute.cs" />
     <Compile Include="Services\DoctorService.cs" />
     <Compile Include="Services\EmailService.cs" />
+    <Compile Include="Services\GeneralConsultService.cs" />
     <Compile Include="Services\GeneralService.cs" />
     <Compile Include="Services\Log.cs" />
     <Compile Include="Services\PatientService.cs" />
