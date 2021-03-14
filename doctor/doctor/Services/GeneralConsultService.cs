@@ -28,10 +28,13 @@ namespace doctor.Services
             {
                 db.Open();
                 return db.Query<ConsultationDates>(@"
-                        select idconsulta as Id,
-                        Fecha as ConsultationDate from Consultas
-                        where idpaciente = @patientId
-                        order by Fecha desc", new
+                        select c.idconsulta as Id,
+                        c.Fecha as ConsultationDate
+                        from Consultas c
+                        left join ConsultaGinecologa g on c.idconsulta = g.idconsulta
+                        left join ConsultaObstetrica o on c.idconsulta = o.idconsulta
+                        where idpaciente = @patientId and g.idconsulta is null and o.idconsulta is null 
+                        order by c.Fecha desc", new
                 {
                     patientId
                 }).ToList();
@@ -109,8 +112,7 @@ namespace doctor.Services
             }, transaction);
         }
 
-        private int InsertConsult(ref IDbConnection db,
-            ref IDbTransaction transaction, int doctorId,
+        private int InsertConsult(ref IDbConnection db, ref IDbTransaction transaction, int doctorId,
             int patientId, DateTime now, GeneralConsult consult)
         {
             return db.QuerySingle<int>(@"
@@ -121,7 +123,8 @@ namespace doctor.Services
                     values
                     (@doctorId, @patientId, @weight, @size, @temperature, @bloodA, @bloodB,
                     @headc, @heart, @breathing, @reason, @exploration, @measures, @observations,
-                    @now, @pronostic)",
+                    @now, @pronostic);
+                    select cast(scope_identity() as int)",
                     new
                     {
                         doctorId,
@@ -143,12 +146,10 @@ namespace doctor.Services
                     }, transaction);
         }
 
-        private int InsertComplement(ref IDbConnection db,
-            ref IDbTransaction transaction, string tableName, int doctorId,
-            int patientId, int consultId, DateTime now,
-            List<string> complement)
+        private int InsertComplement(ref IDbConnection db, ref IDbTransaction transaction, string tableName,
+            int doctorId, int patientId, int consultId, DateTime now, List<string> complement)
         {
-            return db.QuerySingle<int>(@"
+            return db.Execute(@"
                     insert into " + tableName + @"
                     (idconsulta, idmedico, idpaciente, Fecha, Lineas)
                     values
@@ -171,22 +172,53 @@ namespace doctor.Services
             {
                 db.Open();
                 var consult = db.Query<ConsultasRepository>(@"
-                        select *
-                        from Consultas
-                        where idconsulta = @consultId",
+                        select * from Consultas where idconsulta = @consultId",
                         new
                         {
                             consultId
                         }).Select(x => new GeneralConsult
-                        { 
-                            
-                        });
+                        {
+                            BasicConsult = new BasicConsult
+                            {
+                                Weight = x.Peso,
+                                Size = x.Altura,
+                                Mass = 0,
+                                Temperature = x.Temperatura,
+                                BloodPressure_A = x.TensionArterial,
+                                BloodPressure_B = x.TensionArterialB
+                            },
+                            PatientConsult = new PatientConsult
+                            {
+                                PatientId = x.idpaciente
+                            },
+                            ConsultationDate = x.Fecha,
+                            HeadCircuference = x.perimetroCefalico,
+                            HeartRate = x.FrecuenciaCardiaca,
+                            BreathingFrecuency = x.FrecuenciaRespiratoria,
+                            ReasonForConsultation = x.motivo,
+                            PhysicalExploration = x.SignosSintomas1,
+                            PreventiveMeasures = x.MedidasPreventivas,
+                            Observations = x.observaciones,
+                            _Prognostic = x.Pronostico
+                        }).FirstOrDefault();
                 if (consult != null)
                 {
+                    if (consult.BasicConsult.Size % 1 == 0)
+                        consult.BasicConsult.Size /= 100;
+                    if (consult.BasicConsult.Weight > 0 && consult.BasicConsult.Size > 0)
+                        consult.BasicConsult.Mass = consult.BasicConsult.Weight / (consult.BasicConsult.Size * consult.BasicConsult.Size);
 
+                    consult.Diagnostics = new DiagnosticService().GetDiagnosticsByConsult(consultId);
+                    consult.Treatments = new TreatmentService().GetTreatmentsByConsult(consultId);
+                    consult.CabinetStudies = new StudiesService().GetCabinetStudies(consultId);
+                    consult.LaboratoryStudies = new StudiesService().GetLaboratoryStudies(consultId);
+
+                    consult.Prognostic = consult._Prognostic != null ?
+                        consult._Prognostic.Split('|', (char)StringSplitOptions.RemoveEmptyEntries).ToList()
+                        : new List<string>();
                 }
 
-                return null;
+                return consult;
             }
         }
 

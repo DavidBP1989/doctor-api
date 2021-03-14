@@ -42,7 +42,7 @@ namespace doctor.Services
                     @page = _page,
                     itemsPerPage,
                     orderby
-                }, null, null, CommandType.StoredProcedure);
+                }, null, commandTimeout: 120, CommandType.StoredProcedure);
 
                 int totalRows = result.Read<int>().First();
 
@@ -63,7 +63,7 @@ namespace doctor.Services
                 var lastEmeciFromPatient = db.Query<string>(@"
                     select top(1) Emeci
                     from vPatients where Emeci like @emeci
-                    order by RegistrationDate desc",
+                    order by Id desc",
                     new
                     {
                         emeci = "%" + emeci + "%"
@@ -106,7 +106,7 @@ namespace doctor.Services
 
                     var coordinates = db.Query<DatosTarjetaRepository>(@"
                         select * from DatosTarjeta where noTarjeta = @emeci",
-                        new { emeci = patient.EMECI }).ToList();
+                        new { emeci = patient.EMECI }, null, false, commandTimeout: 120).ToList();
                     var random = coordinates.ElementAt(new Random().Next(1, coordinates.Count()));
                     patient.RandomCoordinate = random.Coordenada;
                     patient.RandomCoordinateValue = random.Dato;
@@ -272,6 +272,7 @@ namespace doctor.Services
             }
 
             bool color = true;
+            Random rnd = new Random();
 
             for (int i = 1; i <= 10; i++)
             {
@@ -287,7 +288,7 @@ namespace doctor.Services
                 for (var j = 0; j <= 9; j++)
                 {
                     letter = arrABC[j];
-                    var dato = new Random().Next(0, 999).ToString("00#");
+                    var dato = rnd.Next(0, 999).ToString("00#");
                     db.Execute(@"
                             insert into DatosTarjeta
                             (noTarjeta, Dato, Coordenada)
@@ -325,8 +326,8 @@ namespace doctor.Services
 
                 if (patient > 0)
                 {
-                    var dt = db.Query<bool>(@"
-                        select * from DatosTarjeta
+                    var dt = db.ExecuteScalar<bool>(@"
+                        select count(1) from DatosTarjeta
                         where Coordenada = @coordinate and
                         Dato = @dato and
                         noTarjeta = @emeci", new
@@ -334,7 +335,7 @@ namespace doctor.Services
                         coordinate = req.Coordinate,
                         dato = req.Value,
                         emeci = req.Emeci
-                    }).Any();
+                    });
 
                     if (dt)
                     {
@@ -344,6 +345,18 @@ namespace doctor.Services
                 }
             }
             return result;
+        }
+
+        public int GetMenarcaAgeByPatientId(int patientId)
+        {
+            using (IDbConnection db = new SqlConnection(connection))
+            {
+                db.Open();
+
+                return db.Query<int>(@"select EdadMenarca from Paciente where idPaciente = @patientId",
+                    new { patientId })
+                    .FirstOrDefault();
+            }
         }
 
         private string GetEmeci(int doctorId)
@@ -367,7 +380,7 @@ namespace doctor.Services
             gImg.DrawString(
                 msj,
                 new drawing.Font("Arial", 20, drawing.FontStyle.Bold),
-                drawing.SystemBrushes.Window, new drawing.Point(50, 175)
+                drawing.SystemBrushes.WindowText, new drawing.Point(50, 175)
             );
 
             var ms = new MemoryStream();

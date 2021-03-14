@@ -15,7 +15,7 @@ namespace doctor.Controllers
 
         [Route("dates/{patientId:Int}")]
         [HttpGet]
-        public IEnumerable<ConsultationDates> ConsultationsDates(int patientId) =>
+        public IEnumerable<ConsultationDates> GetPreviousConsultDates(int patientId) =>
             service.GetPreviousConsultDates(patientId);
 
 
@@ -27,7 +27,6 @@ namespace doctor.Controllers
 
         [Route("{consultId:Int}")]
         [HttpGet]
-        public GeneralConsult GetConsultById(int consultId) =>
-            service.GetConsultById(consultId);
+        public GeneralConsult GetConsultById(int consultId) => service.GetConsultById(consultId);
     }
 }

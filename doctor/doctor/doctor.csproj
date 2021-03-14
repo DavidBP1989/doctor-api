@@ -151,10 +151,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CabinetStudiesController.cs" />
+    <Compile Include="Controllers\DiagnosticsController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\GeneralConsultController.cs" />
+    <Compile Include="Controllers\GynecologyConsultController.cs" />
+    <Compile Include="Controllers\LaboratoryStudiesController.cs" />
+    <Compile Include="Controllers\ObstetricConsultController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\PublicController.cs" />
+    <Compile Include="Controllers\TreatmentsController.cs" />
+    <Compile Include="Database\CatCategoEstudiosRepository.cs" />
+    <Compile Include="Database\CatdiagnosticoRepository.cs" />
+    <Compile Include="Database\CatEstudiosRepository.cs" />
+    <Compile Include="Database\CatrecetasRepository.cs" />
+    <Compile Include="Database\ConsultaGinecologaRepository.cs" />
+    <Compile Include="Database\ConsultaObstetricaRepository.cs" />
     <Compile Include="Database\ConsultasRepository.cs" />
     <Compile Include="Database\DatosTarjetaRepository.cs" />
     <Compile Include="Database\MedicoRepository.cs" />
@@ -164,7 +176,16 @@
     <Compile Include="Models\Consults\BasicConsult.cs" />
     <Compile Include="Models\Consults\Consult.cs" />
     <Compile Include="Models\Consults\ConsultationDates.cs" />
+    <Compile Include="Models\Consults\General\CategoryStudies.cs" />
+    <Compile Include="Models\Consults\General\Diagnostics.cs" />
     <Compile Include="Models\Consults\General\GeneralConsult.cs" />
+    <Compile Include="Models\Consults\General\Req\DiagnosticReq.cs" />
+    <Compile Include="Models\Consults\General\Req\TreatmentReq.cs" />
+    <Compile Include="Models\Consults\General\Res\DiagnosticRes.cs" />
+    <Compile Include="Models\Consults\General\Res\TreatmentRes.cs" />
+    <Compile Include="Models\Consults\General\Treatments.cs" />
+    <Compile Include="Models\Consults\Gynecology\GynecologyConsult.cs" />
+    <Compile Include="Models\Consults\Obstetric\ObstetricConsult.cs" />
     <Compile Include="Models\Consults\PatientConsult.cs" />
     <Compile Include="Models\Doctor\BasicInfo.cs" />
     <Compile Include="Models\Doctor\Cities.cs" />
@@ -182,12 +203,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\OauthProvider.cs" />
     <Compile Include="Query\QueryableAttribute.cs" />
+    <Compile Include="Services\DiagnosticService.cs" />
     <Compile Include="Services\DoctorService.cs" />
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\GeneralConsultService.cs" />
     <Compile Include="Services\GeneralService.cs" />
+    <Compile Include="Services\GynecologyConsultService.cs" />
+    <Compile Include="Services\Helper.cs" />
+    <Compile Include="Services\ObstetricConsultService.cs" />
+    <Compile Include="Services\StudiesService.cs" />
     <Compile Include="Services\Log.cs" />
     <Compile Include="Services\PatientService.cs" />
+    <Compile Include="Services\TreatmentService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -25,5 +25,9 @@ namespace doctor.Database
         public DateTime? ProximaCita { get; set; }
         public string observaciones { get; set; }
         public string Pronostico { get; set; }
+
+
+        public ConsultaGinecologaRepository GynecologyConsult { get; set; }
+        public ConsultaObstetricaRepository ObstetricConsult { get; set; }
     }
 }
