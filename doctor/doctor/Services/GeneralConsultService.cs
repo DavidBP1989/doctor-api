@@ -232,7 +232,7 @@ namespace doctor.Services
                 {
                     if (sr.Trim() != "")
                     {
-                        l += $"{count++:0#}{sr}\r\n";
+                        l += $"{count++:0#}{sr}:\r\n";
                     }
                 }
             }

@@ -25,7 +25,8 @@ namespace doctor.Controllers
             )
         {
             var result = await service.GetListOfPatients(
-                doctorId, page ?? 1,
+                doctorId,
+                page ?? 1,
                 itemsPerPage ?? 15,
                 columnName ?? "Nombre",
                 textToSearch ?? "",

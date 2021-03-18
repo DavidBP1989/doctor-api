@@ -1,0 +1,42 @@
+﻿@using System.Configuration
+@model doctor.Models.EmailTemplate
+To: @Model.To
+Bcc: @Model.Bcc
+Subject: @Html.Raw(Model.Subject)
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body style="background-image: url(https://www.emeci.com/ConsultaMedico/img/fondo-acceso-emeci.jpg); font-weight: 400; font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif">
+    <div style="width:80%; margin: 7% auto;">
+        @if (Model.TypeEmailToSend != doctor.Models.EmailTemplate.TypeEmail.patientRegister)
+        {
+            <div style="font-size: 35px; text-align: center; font-weight: 300; padding-top: 15px; background-color: white;">
+                <img style="vertical-align: middle; border: 0;" src="https://www.emeci.com/ConsultaMedico/img/emeci.png" />
+            </div>
+        }
+        <div style="background-color: white; padding: 20px; border-top: 0; color: #666;">
+            <h3 style="text-align: center; padding: 0 20px 20px 20px; margin: 0;">@Model.Title</h3>
+            <div>
+                @switch (Model.TypeEmailToSend)
+                {
+                    case doctor.Models.EmailTemplate.TypeEmail.forgotPwd:
+                        @Html.Partial("/Views/Emails/MainViews/ForgotPassword.cshtml", Model.ForgotPassword)
+                        break;
+                    case doctor.Models.EmailTemplate.TypeEmail.doctorRegister:
+                        @Html.Partial("/Views/Emails/MainViews/Register.cshtml", Model.DoctorRegister)
+                        break;
+                    case doctor.Models.EmailTemplate.TypeEmail.patientRegister:
+                        string appName = ConfigurationManager.AppSettings["applicationName"] ?? "";
+                        string url = $"{AppDomain.CurrentDomain.BaseDirectory}{appName}/BienvenidaMailEMECI.jpg";
+                        url = "http://emeci.com/BienvenidaMailEMECI.jpg";
+                        <img style="width:100%" src="@url" />
+                        break;
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>

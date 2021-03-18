@@ -31,18 +31,17 @@ namespace doctor.Services
             using (IDbConnection db = new SqlConnection(connection))
             {
                 db.Open();
-                var emeci = GetEmeci(doctorId);
                 int _page = (int)((page - 1) * itemsPerPage);
 
                 var result = await db.QueryMultipleAsync("spPatientList", new
                 {
-                    emeci,
+                    doctorId,
                     columnName,
                     @textToSearch = textToSearch.Replace(' ', '%'),
                     @page = _page,
                     itemsPerPage,
                     orderby
-                }, null, commandTimeout: 120, CommandType.StoredProcedure);
+                }, null, null, CommandType.StoredProcedure);
 
                 int totalRows = result.Read<int>().First();
 
@@ -74,9 +73,12 @@ namespace doctor.Services
                     int last = int.Parse(split[2]);
                     last++;
                     return $"{split[0]}-{split[1]}-{last:000#}";
+                } else
+                {
+                    //nuevo paciente
+                    return $"{emeci}-0001";
                 }
             }
-            return "";
         }
 
         public Patient GetByPatientById(int patientId)
@@ -106,7 +108,7 @@ namespace doctor.Services
 
                     var coordinates = db.Query<DatosTarjetaRepository>(@"
                         select * from DatosTarjeta where noTarjeta = @emeci",
-                        new { emeci = patient.EMECI }, null, false, commandTimeout: 120).ToList();
+                        new { emeci = patient.EMECI }).ToList();
                     var random = coordinates.ElementAt(new Random().Next(1, coordinates.Count()));
                     patient.RandomCoordinate = random.Coordenada;
                     patient.RandomCoordinateValue = random.Dato;
