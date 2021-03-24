@@ -1,6 +1,8 @@
 ﻿using doctor.Models;
 using doctor.Models.Doctor;
 using doctor.Models.Doctor.Req;
+using doctor.Models.Patients.Req;
+using doctor.Models.Patients.Res;
 using doctor.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,10 +15,11 @@ namespace doctor.Controllers
     {
         private readonly DoctorService doctorService = new DoctorService();
         private readonly GeneralService generalService = new GeneralService();
+        private readonly PatientService patientService = new PatientService();
 
         [Route("doctorregister")]
         [HttpPost]
-        public BasicResponse Register([FromBody] RegisterReq req)
+        public BasicResponse DoctorRegister([FromBody] RegisterReq req)
         {
             var result = doctorService.Register(req);
             if ((bool)(result?.IsSuccess))
@@ -59,5 +62,17 @@ namespace doctor.Controllers
             }
             return result;
         }
+
+
+        [HttpGet]
+        [Route("doctorsByAssociation/{associationId:Int}")]
+        public IEnumerable<DoctorsList> GetListOfDoctorByAssociation(int associationId) =>
+            doctorService.GetListOfDoctorByAssociation(associationId);
+
+
+        [HttpPost]
+        [Route("patientregister/{doctorId:Int}")]
+        public NewPatientRes PatientRegister(int doctorId, [FromBody] NewPatientReq req) =>
+            patientService.AddNewPatient(doctorId, req);
     }
 }

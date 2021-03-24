@@ -4,6 +4,7 @@ using doctor.Models;
 using doctor.Models.Doctor;
 using doctor.Models.Doctor.Req;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -327,6 +328,32 @@ namespace doctor.Services
                             doctorId
                         }).FirstOrDefault();
             }
+        }
+
+        public IEnumerable<DoctorsList> GetListOfDoctorByAssociation(int associationId)
+        {
+            IEnumerable<DoctorsList> result = Enumerable.Empty<DoctorsList>();
+            using (IDbConnection db = new SqlConnection(connection))
+            {
+                var doctors = db.Query<int>(@"
+                        select DoctorId from DoctorsByAssociation
+                        where AssociationId = @associationId", new { associationId }).ToArray();
+                if (doctors.Length > 0)
+                {
+                    return db.Query<DoctorsList>(@"
+                        select
+                        (r.Nombre + ' '  + r.Apellido) as Name,
+                        m.Idmedico as DoctorId
+                        from Registro r
+                        inner join Medico m on r.idRegistro = m.IdRegistro
+                        where m.Idmedico in @doctorsId",
+                        new
+                        {
+                            doctorsId = doctors
+                        }).ToList();
+                }
+            }
+            return result;
         }
     }
 }

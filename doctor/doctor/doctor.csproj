@@ -189,6 +189,7 @@
     <Compile Include="Models\Consults\PatientConsult.cs" />
     <Compile Include="Models\Doctor\BasicInfo.cs" />
     <Compile Include="Models\Doctor\Cities.cs" />
+    <Compile Include="Models\Doctor\DoctorsList.cs" />
     <Compile Include="Models\Doctor\ForgotPassword.cs" />
     <Compile Include="Models\Doctor\RegisterInformation.cs" />
     <Compile Include="Models\Doctor\Req\ChangePasswordReq.cs" />

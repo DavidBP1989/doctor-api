@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using doctor.Database;
+using doctor.Models;
 using doctor.Models.Patients;
 using doctor.Models.Patients.Req;
 using doctor.Models.Patients.Res;
