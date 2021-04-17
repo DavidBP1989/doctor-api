@@ -1,3 +1,4 @@
+D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\doctor.dll.config
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\doctor.dll
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\doctor.pdb
@@ -22,7 +23,6 @@ D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\roslyn\Microsoft.Win32.Prim
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\roslyn\System.AppContext.dll
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\roslyn\System.Collections.Immutable.dll
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\roslyn\System.Console.dll
-D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\roslyn\System.Diagnostics.StackTrace.dll
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\roslyn\System.Globalization.Calendars.dll
@@ -50,7 +50,9 @@ D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\roslyn\vbc.exe.config
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\roslyn\vbc.rsp
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\roslyn\VBCSCompiler.exe
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\roslyn\VBCSCompiler.exe.config
+D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\BouncyCastle.Crypto.dll
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\Dapper.dll
+D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\itextsharp.dll
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\Microsoft.AspNet.Identity.Core.dll
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\Microsoft.AspNet.Identity.Owin.dll
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
@@ -76,6 +78,7 @@ D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\System.Web.WebPages.Deploym
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\System.Web.WebPages.dll
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\System.Web.WebPages.Razor.dll
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\Dapper.xml
+D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\itextsharp.xml
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\Microsoft.AspNet.Identity.Core.xml
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\Microsoft.AspNet.Identity.Owin.xml
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\Microsoft.Owin.xml
@@ -102,7 +105,3 @@ D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\obj\Debug\doctor.csproj.CoreCom
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\obj\Debug\doctor.csproj.CopyComplete
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\obj\Debug\doctor.dll
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\obj\Debug\doctor.pdb
-D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\BouncyCastle.Crypto.dll
-D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\itextsharp.dll
-D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\itextsharp.xml
-D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\obj\Debug\doctor.csprojAssemblyReference.cache

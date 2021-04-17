@@ -25,10 +25,11 @@ namespace doctor.Controllers
             if ((bool)(result?.IsSuccess))
             {
                 var emailService = new EmailService(req.Email);
-                Task.Run(async () =>
-                {
-                    await emailService.SendDoctorRegister(req);
-                });
+                //Task.Run(async () =>
+                //{
+                //    await emailService.SendDoctorRegister(req);
+                //});
+                emailService.SendDoctorRegister(req);
             }
             return result;
         }
@@ -55,10 +56,11 @@ namespace doctor.Controllers
             {
                 result.IsSuccess = true;
                 var emailService = new EmailService(fp.Email);
-                Task.Run(async () =>
-                {
-                    await emailService.SendForgotPassword(fp);
-                });
+                //Task.Run(async () =>
+                //{
+                //    await emailService.SendForgotPassword(fp);
+                //});
+                emailService.SendForgotPassword(fp);
             }
             return result;
         }

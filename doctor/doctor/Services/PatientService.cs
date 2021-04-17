@@ -159,10 +159,11 @@ namespace doctor.Services
                     if (result.PatientId.HasValue && draw != null)
                     {
                         var emailService = new EmailService(req.Emails);
-                        Task.Run(async () =>
-                        {
-                            await emailService.SendPatientRegister(req, draw);
-                        });
+                        //Task.Run(async () =>
+                        //{
+                        //    await emailService.SendPatientRegister(req, draw);
+                        //});
+                        emailService.SendPatientRegister(req, draw);
                     }
                 }
             }

@@ -18,7 +18,7 @@ namespace doctor.Services
             To = to;
         }
 
-        public async Task SendForgotPassword(ForgotPassword req)
+        public async Task SendForgotPasswordAsync(ForgotPassword req)
         {
             var email = new EmailTemplate
             {
@@ -40,7 +40,29 @@ namespace doctor.Services
             }
         }
 
-        public async Task SendDoctorRegister(RegisterReq req)
+        public void SendForgotPassword(ForgotPassword req)
+        {
+            var email = new EmailTemplate
+            {
+                To = "bustamante24.1989@gmail.com",//To,
+                Bcc = Bcc,
+                Subject = "EMECI - Recordatorio de contraseña",
+                Title = "Protege tu salud y la de tu familia a través de EMECI",
+                TypeEmailToSend = EmailTemplate.TypeEmail.forgotPwd,
+                ForgotPassword = req
+            };
+
+            try
+            {
+                email.Send();
+            }
+            catch (Exception ex)
+            {
+                Log.Write($"Error al enviar el correo de recuperar contraseña: {ex.Message}");
+            }
+        }
+
+        public async Task SendDoctorRegisterAsync(RegisterReq req)
         {
             var email = new EmailTemplate
             {
@@ -62,7 +84,29 @@ namespace doctor.Services
             }
         }
 
-        public async Task SendPatientRegister(NewPatientReq req, MemoryStream positions)
+        public void SendDoctorRegister(RegisterReq req)
+        {
+            var email = new EmailTemplate
+            {
+                To = To,
+                Bcc = Bcc,
+                Subject = "EMECI - Registro médico",
+                Title = "Registro médico",
+                TypeEmailToSend = EmailTemplate.TypeEmail.doctorRegister,
+                DoctorRegister = req
+            };
+
+            try
+            {
+                email.Send();
+            }
+            catch (Exception ex)
+            {
+                Log.Write($"Error al enviar el correo de registro de doctor: {ex.Message}");
+            }
+        }
+
+        public async Task SendPatientRegisterAsync(NewPatientReq req, MemoryStream positions)
         {
             var email = new EmailTemplate
             {
@@ -79,6 +123,30 @@ namespace doctor.Services
             try
             {
                 await email.SendAsync();
+            }
+            catch (Exception ex)
+            {
+                Log.Write($"Error al enviar el correo de nuevo pacient: {ex.Message}");
+            }
+        }
+
+        public void SendPatientRegister(NewPatientReq req, MemoryStream positions)
+        {
+            var email = new EmailTemplate
+            {
+                To = To,
+                Bcc = Bcc,
+                Subject = "EMECI - Registro de paciente",
+                Title = "Registro de paciente",
+                TypeEmailToSend = EmailTemplate.TypeEmail.patientRegister,
+                PatientReq = req
+            };
+
+            email.Attach(new Attachment(positions, "PosicionesDeAcceso.pdf"));
+
+            try
+            {
+                email.Send();
             }
             catch (Exception ex)
             {
