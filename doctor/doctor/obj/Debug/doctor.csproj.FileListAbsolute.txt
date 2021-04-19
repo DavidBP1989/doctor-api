@@ -105,3 +105,4 @@ D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\obj\Debug\doctor.csproj.CoreCom
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\obj\Debug\doctor.csproj.CopyComplete
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\obj\Debug\doctor.dll
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\obj\Debug\doctor.pdb
+D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\obj\Debug\doctor.csprojAssemblyReference.cache
