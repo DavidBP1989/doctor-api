@@ -5,6 +5,7 @@
         //informacion del especialista
         public string Name { get; set; }
         public string LastName { get; set; }
+        public string Sex { get; set; }
         public string RFC { get; set; }
         public string CURP { get; set; }
         public string NoSEP_ProfessionalCertificate { get; set; }

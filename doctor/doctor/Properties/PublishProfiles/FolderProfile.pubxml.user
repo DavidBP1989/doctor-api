@@ -5,6 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>D:\DAVID\EMECI\PROJECTS\doctor-api-published</_PublishTargetUrl>
+    <History>True|2021-05-18T02:40:17.7977927Z;True|2021-05-09T15:35:38.0917136-05:00;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/BouncyCastle.Crypto.dll">
@@ -14,10 +15,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/17/2020 09:58:48</publishTime>
     </File>
     <File Include="bin/doctor.dll">
-      <publishTime>04/16/2021 22:50:29</publishTime>
+      <publishTime>05/17/2021 21:40:15</publishTime>
     </File>
     <File Include="bin/doctor.pdb">
-      <publishTime>04/16/2021 22:50:29</publishTime>
+      <publishTime>05/17/2021 21:40:15</publishTime>
     </File>
     <File Include="bin/itextsharp.dll">
       <publishTime>08/27/2020 11:20:20</publishTime>
@@ -244,6 +245,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="bin/System.Web.WebPages.Razor.dll">
       <publishTime>11/28/2018 13:04:24</publishTime>
     </File>
+    <File Include="Content/ImageLogo/defaultLogo.png">
+      <publishTime>04/25/2021 21:22:31</publishTime>
+    </File>
     <File Include="Content/imgAccess.jpg">
       <publishTime>03/09/2021 01:16:44</publishTime>
     </File>
@@ -272,7 +276,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/07/2021 23:51:40</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/14/2021 23:34:25</publishTime>
+      <publishTime>05/17/2021 21:40:17</publishTime>
     </File>
   </ItemGroup>
 </Project>
