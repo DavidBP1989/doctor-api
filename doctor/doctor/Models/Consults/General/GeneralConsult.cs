@@ -15,13 +15,19 @@ namespace doctor.Models.Consults.General
         public string PhysicalExploration { get; set; }
         public string PreventiveMeasures { get; set; }
         public string Observations { get; set; }
-        public List<string> Diagnostics { get; set; }
-        public List<string> Treatments { get; set; }
-        public List<string> CabinetStudies { get; set; }
-        public List<string> LaboratoryStudies { get; set; }
+        public List<Format> Diagnostics { get; set; }
+        public List<Format> Treatments { get; set; }
+        public List<Format> CabinetStudies { get; set; }
+        public List<Format> LaboratoryStudies { get; set; }
 
         [JsonIgnore]
         public string _Prognostic { get; set; }
         public List<string> Prognostic { get; set; }
+
+        public class Format
+        {
+            public string Name { get; set; }
+            public List<string> Studies { get; set; }
+        }
     }
 }

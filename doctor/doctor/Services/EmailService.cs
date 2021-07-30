@@ -22,7 +22,7 @@ namespace doctor.Services
         {
             var email = new EmailTemplate
             {
-                To = "bustamante24.1989@gmail.com",//To,
+                To = To,
                 Bcc = Bcc,
                 Subject = "EMECI - Recordatorio de contraseña",
                 Title = "Protege tu salud y la de tu familia a través de EMECI",
@@ -44,7 +44,7 @@ namespace doctor.Services
         {
             var email = new EmailTemplate
             {
-                To = "bustamante24.1989@gmail.com",//To,
+                To = To,
                 Bcc = Bcc,
                 Subject = "EMECI - Recordatorio de contraseña",
                 Title = "Protege tu salud y la de tu familia a través de EMECI",

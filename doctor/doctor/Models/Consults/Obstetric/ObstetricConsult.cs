@@ -45,7 +45,7 @@ namespace doctor.Models.Consults.Obstetric
         public string Situtation { get; set; }
         public string Attitude { get; set; }
         public string FetalMovements { get; set; }
-        public byte ApproximateProductWeight { get; set; }
+        public double ApproximateProductWeight { get; set; }
         public byte TA { get; set; }
         public byte FCM { get; set; }
         public string Edema { get; set; }

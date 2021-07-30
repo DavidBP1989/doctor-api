@@ -36,7 +36,7 @@ namespace doctor.Database
         public string siuacuion { get; set; }
         public string Actitud { get; set; }
         public string MovimientosFetales { get; set; }
-        public byte? PesoAproxProducto { get; set; }
+        public double? PesoAproxProducto { get; set; }
         public byte? TA { get; set; }
         public byte? FCM { get; set; }
         public string Edema { get; set; }

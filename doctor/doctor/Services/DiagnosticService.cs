@@ -10,6 +10,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using static doctor.Models.Consults.General.GeneralConsult;
 
 namespace doctor.Services
 {
@@ -104,7 +105,7 @@ namespace doctor.Services
             return result;
         }
 
-        public List<string> GetDiagnosticsByConsult(int consultId)
+        public List<Format> GetDiagnosticsByConsult(int consultId)
         {
             using (IDbConnection db = new SqlConnection(connection))
             {
@@ -116,7 +117,10 @@ namespace doctor.Services
                 {
                     consultId
                 }).FirstOrDefault();
-                return Helper.LineFormat(lines);
+
+                var newFormat = lines?.StartsWith("[new]");
+
+                return (newFormat.HasValue && newFormat.Value) ? Helper.NewLineformat(lines) : Helper.LineFormat(lines);
             }
         }
     }

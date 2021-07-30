@@ -10,6 +10,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using static doctor.Models.Consults.General.GeneralConsult;
 
 namespace doctor.Services
 {
@@ -147,7 +148,7 @@ namespace doctor.Services
         }
 
         private int InsertComplement(ref IDbConnection db, ref IDbTransaction transaction, string tableName,
-            int doctorId, int patientId, int consultId, DateTime now, List<string> complement)
+            int doctorId, int patientId, int consultId, DateTime now, List<Format> complement)
         {
             return db.Execute(@"
                     insert into " + tableName + @"
@@ -222,21 +223,31 @@ namespace doctor.Services
             }
         }
 
-        private string SetLines(List<string> lines)
+
+        /*
+         * [new]:name=x|x:name=x|x
+         * 
+         * si lines empieza con '[new]=' quiere decir que se trata del nuevo
+         * formato, ya que la forma vieja no guarda correctamente los datos
+         */
+        private string SetLines(List<Format> lines)
         {
-            int count = 0;
-            string l = "";
-            if (lines != null)
+            string result = "";
+            if (lines != null && lines.Count > 0)
             {
+                result = "[new]";
                 foreach (var sr in lines)
                 {
-                    if (sr.Trim() != "")
+                    result += $">{sr.Name}=";
+                    foreach (var s in sr.Studies)
                     {
-                        l += $"{count++:0#}{sr}:\r\n";
+                        result += $"{s}|";
                     }
+                    result = result.Remove(result.Length - 1);
                 }
             }
-            return l;
+
+            return result;
         }
     }
 }

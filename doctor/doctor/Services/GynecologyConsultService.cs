@@ -249,7 +249,7 @@ namespace doctor.Services
                     if (consult.BasicConsult.Weight > 0 && consult.BasicConsult.Size > 0)
                     {
                         double mass = (double)(consult.BasicConsult.Weight / (consult.BasicConsult.Size * consult.BasicConsult.Size));
-                        consult.BasicConsult.Mass = (float)Math.Round(mass);
+                        consult.BasicConsult.Mass = (float)Math.Round(mass, 2);
                     }
 
                     consult.MenarcaAge =

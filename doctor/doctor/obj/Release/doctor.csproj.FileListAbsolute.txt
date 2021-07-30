@@ -101,8 +101,8 @@ D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\System.Net.Http.Formatting.
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\System.Web.Http.xml
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\System.Web.Http.WebHost.xml
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\obj\Release\doctor.csprojAssemblyReference.cache
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\obj\Release\doctor.csproj.CoreCompileInputs.cache
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\obj\Release\doctor.csproj.CopyComplete
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\obj\Release\doctor.dll
 D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\obj\Release\doctor.pdb
+D:\DAVID\EMECI\PROJECTS\doctor-api\doctor\doctor\obj\Release\doctor.csproj.AssemblyReference.cache

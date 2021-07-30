@@ -7,6 +7,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using static doctor.Models.Consults.General.GeneralConsult;
 
 namespace doctor.Services
 {
@@ -55,7 +56,7 @@ namespace doctor.Services
             }
         }
 
-        public List<string> GetLaboratoryStudies(int consultId)
+        public List<Format> GetLaboratoryStudies(int consultId)
         {
             using (IDbConnection db = new SqlConnection(connection))
             {
@@ -67,11 +68,14 @@ namespace doctor.Services
                 {
                     consultId
                 }).FirstOrDefault();
-                return Helper.LineFormat(lines);
+
+                var newFormat = lines?.StartsWith("[new]");
+
+                return (newFormat.HasValue && newFormat.Value) ? Helper.NewLineformat(lines) : Helper.LineFormat(lines);
             }
         }
 
-        public List<string> GetCabinetStudies(int consultId)
+        public List<Format> GetCabinetStudies(int consultId)
         {
             using (IDbConnection db = new SqlConnection(connection))
             {
@@ -83,7 +87,10 @@ namespace doctor.Services
                 {
                     consultId
                 }).FirstOrDefault();
-                return Helper.LineFormat(lines);
+
+                var newFormat = lines?.StartsWith("[new]");
+
+                return (newFormat.HasValue && newFormat.Value) ? Helper.NewLineformat(lines) : Helper.LineFormat(lines);
             }
         }
     }
