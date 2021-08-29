@@ -35,5 +35,6 @@ namespace doctor.Database
         public string TelefonoPareja { get; set; }
         public string nombrePareja { get; set; }
         public string edadPareja { get; set; }
+        public bool? SexuallyActive { get; set; }
     }
 }

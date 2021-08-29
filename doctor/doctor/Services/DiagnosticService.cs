@@ -1,16 +1,15 @@
 ﻿using Dapper;
 using doctor.Database;
 using doctor.Models;
+using doctor.Models.Consults;
 using doctor.Models.Consults.General;
 using doctor.Models.Consults.General.Req;
 using doctor.Models.Consults.General.Res;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using static doctor.Models.Consults.General.GeneralConsult;
 
 namespace doctor.Services
 {

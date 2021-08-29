@@ -1,4 +1,5 @@
-﻿using System;
+﻿using doctor.Models.Consults;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using static doctor.Models.Consults.General.GeneralConsult;

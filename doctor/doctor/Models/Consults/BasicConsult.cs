@@ -9,5 +9,8 @@
         public int? BloodPressure_A { get; set; }
         public int? BloodPressure_B { get; set; }
         public string ReasonForConsultation { get; set; }
+        public string PhysicalExploration { get; set; }
+        public string PreventiveMeasures { get; set; }
+        public string Observations { get; set; }
     }
 }

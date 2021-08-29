@@ -159,10 +159,11 @@ namespace doctor.Services
                     insert into Medico
                     (IdRegistro, RFC, TelefonoConsultorio, DomicilioConsultorio, CertCMCP,
                     CedulaEspecialidad, NoRegSSA, AgrupacionLocal, AgrupacionNacional,
-                    UniversidadEspecialidad, CedulaProfesional, HospitalResidenciaPediatra)
+                    UniversidadEspecialidad, CedulaProfesional, HospitalResidenciaPediatra,
+                    EspecialidadMedica, SubespecialidadMedica)
                     values
                     (@registerId, @rfc, @officePhone, @officeAddress, @cmcp, @certificate,
-                    @ssa, @school, @grouping, @university, @sep, @hospital)",
+                    @ssa, @school, @grouping, @university, @sep, @hospital, @espMedica, @subespMedica)",
                     new
                     {
                         registerId,
@@ -177,6 +178,8 @@ namespace doctor.Services
                         university = req.UniversitySpecialty,
                         sep = req.NoSEP_ProfessionalCertificate,
                         hospital = req.ProfessionalResidenceHospital,
+                        espMedica = req.MedicalSpeciality,
+                        subespMedica = req.SubmedicalSpeciality
                     }, transaction);
         }
         #endregion
@@ -236,7 +239,9 @@ namespace doctor.Services
                 AgrupacionNacional = @grouping,
                 UniversidadEspecialidad = @university,
                 CedulaProfesional = @sep,
-                HospitalResidenciaPediatra = @hospital
+                HospitalResidenciaPediatra = @hospital,
+                EspecialidadMedica = @espMedica,
+                SubespecialidadMedica = @subespMedica
                 where Idmedico = @doctorId",
                 new
                 {
@@ -251,6 +256,8 @@ namespace doctor.Services
                     university = req.UniversitySpecialty,
                     sep = req.NoSEP_ProfessionalCertificate,
                     hospital = req.ProfessionalResidenceHospital,
+                    espMedica = req.MedicalSpeciality,
+                    subespMedica = req.SubmedicalSpeciality,
                     doctorId
                 }, transaction);
         }
@@ -309,6 +316,8 @@ namespace doctor.Services
                         m.UniversidadEspecialidad as UniversitySpecialty,
                         m.CedulaProfesional as NoSEP_ProfessionalCertificate,
                         m.HospitalResidenciaPediatra as ProfessionalResidenceHospital,
+                        m.EspecialidadMedica as MedicalSpeciality,
+                        m.SubespecialidadMedica as SubmedicalSpeciality,
                         r.Nombre as Name,
                         r.Apellido as LastName,
                         r.Colonia as Colony,

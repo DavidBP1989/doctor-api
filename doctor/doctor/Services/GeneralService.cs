@@ -66,5 +66,15 @@ namespace doctor.Services
                     }).FirstOrDefault();
             }
         }
+
+        public List<MedicalSpecialties> GetMedicalSpecialties()
+        {
+            using (IDbConnection db = new SqlConnection(connection))
+            {
+                db.Open();
+
+                return db.Query<MedicalSpecialties>(@"select * from EspecialidadMedica").ToList();
+            }
+        }
     }
 }

@@ -16,6 +16,8 @@
         public string SpecialtyCertificate { get; set; }
         public string NameStateSchool { get; set; }
         public string NameStateGrouping { get; set; }
+        public int? MedicalSpeciality { get; set; }
+        public string SubmedicalSpeciality { get; set; }
 
         //domicilio
         public string Address { get; set; }

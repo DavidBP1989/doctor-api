@@ -5,7 +5,6 @@ using doctor.Models.Patients.Req;
 using doctor.Models.Patients.Res;
 using doctor.Services;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace doctor.Controllers
@@ -76,5 +75,10 @@ namespace doctor.Controllers
         [Route("patientregister/{doctorId:Int}")]
         public NewPatientRes PatientRegister(int doctorId, [FromBody] NewPatientReq req) =>
             patientService.AddNewPatient(doctorId, req);
+
+
+        [HttpGet]
+        [Route("medicalSpecialties")]
+        public IEnumerable<MedicalSpecialties> GetMedicalSpecialties() => generalService.GetMedicalSpecialties();
     }
 }

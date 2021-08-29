@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace doctor.Models.Consults.Gynecology
 {
@@ -13,10 +14,15 @@ namespace doctor.Models.Consults.Gynecology
         public int NewlyBorn { get; set; }
         public int Stillbirth { get; set; }
         public int AgeOfOnsetOfActiveSexualLife { get; set; }
+        public bool SexuallyActive { get; set; }
         public string Menacma { get; set; }
         public Options Checkbox { get; set; }
         public string SpecifyOthers { get; set; }
         public Partner Partner { get; set; }
+        public List<Format> Diagnostics { get; set; }
+        public List<Format> Treatments { get; set; }
+        public List<Format> CabinetStudies { get; set; }
+        public List<Format> LaboratoryStudies { get; set; }
     }
 
     public class Options

@@ -1,13 +1,12 @@
 ﻿using Dapper;
 using doctor.Database;
+using doctor.Models.Consults;
 using doctor.Models.Consults.General;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using static doctor.Models.Consults.General.GeneralConsult;
 
 namespace doctor.Services
 {

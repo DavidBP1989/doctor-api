@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace doctor.Models.Consults.Obstetric
 {
@@ -30,6 +31,10 @@ namespace doctor.Models.Consults.Obstetric
         public string SpecifyAbnormalPregnancies { get; set; }
         public string Observations { get; set; }
         public PregnancyControl PregnancyControl { get; set; }
+        public List<Format> Diagnostics { get; set; }
+        public List<Format> Treatments { get; set; }
+        public List<Format> CabinetStudies { get; set; }
+        public List<Format> LaboratoryStudies { get; set; }
     }
 
     public class PregnancyControl

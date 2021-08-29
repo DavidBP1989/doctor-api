@@ -2,7 +2,6 @@
 using doctor.Database;
 using doctor.Models;
 using doctor.Models.Consults;
-using doctor.Models.Consults.General;
 using doctor.Models.Consults.Gynecology;
 using System;
 using System.Collections.Generic;
@@ -53,6 +52,7 @@ namespace doctor.Services
                 using (var transaction = db.BeginTransaction())
                 {
                     var trans = transaction;
+                    var now = DateTime.Now;
 
                     try
                     {
@@ -61,9 +61,28 @@ namespace doctor.Services
                         int affectedRowConsult = InsertConsult(ref cn, ref trans,
                             doctorId, req.PatientConsult.PatientId.Value, req.BasicConsult);
 
+                        var generalConsult = new GeneralConsultService();
+
+                        int affectedRowRecipe = generalConsult.InsertComplement(ref cn, ref trans, "Recetas",
+                            doctorId, req.PatientConsult.PatientId.Value, affectedRowConsult,
+                            now, req.Treatments);
+
+                        int affectedRowDiagnostics = generalConsult.InsertComplement(ref cn, ref trans, "Diagnosticos",
+                            doctorId, req.PatientConsult.PatientId.Value, affectedRowConsult,
+                            now, req.Diagnostics);
+
+                        int affectedRowLab = generalConsult.InsertComplement(ref cn, ref trans, "EstudiosLab",
+                            doctorId, req.PatientConsult.PatientId.Value, affectedRowConsult,
+                            now, req.LaboratoryStudies);
+
+                        int affectedRowCab = generalConsult.InsertComplement(ref cn, ref trans, "EstudiosGab",
+                            doctorId, req.PatientConsult.PatientId.Value, affectedRowConsult,
+                            now, req.CabinetStudies);
+
                         int affectedRowGyencologyConsult = InsertGynecologyConsult(ref cn, ref trans, affectedRowConsult, req);
 
-                        if (affectedRowConsult > 0 && affectedRowGyencologyConsult > 0)
+                        if (affectedRowConsult > 0 && affectedRowRecipe > 0 && affectedRowDiagnostics > 0
+                            && affectedRowLab > 0 && affectedRowCab > 0 && affectedRowGyencologyConsult > 0)
                         {
                             transaction.Commit();
                             result.IsSuccess = true;
@@ -101,10 +120,11 @@ namespace doctor.Services
             return db.QuerySingle<int>(@"
                     insert into Consultas
                     (idmedico, idpaciente, Peso, Altura, Temperatura,
-                    TensionArterial, TensionArterialB, motivo, Fecha)
+                    TensionArterial, TensionArterialB, motivo, SignosSintomas1,
+                    MedidasPreventivas, observaciones, Fecha)
                     values
                     (@doctorId, @patientId, @weight, @size, @temperature,
-                    @bloodA, @bloodB, @reason, @now);
+                    @bloodA, @bloodB, @reason, @exploration, @measures, @observations, @now);
                     select cast(scope_identity() as int)",
                     new
                     {
@@ -116,6 +136,9 @@ namespace doctor.Services
                         bloodA = consult.BloodPressure_A,
                         bloodB = consult.BloodPressure_B,
                         reason = consult.ReasonForConsultation,
+                        exploration = consult.PhysicalExploration,
+                        measures = consult.PreventiveMeasures,
+                        observations = consult.Observations,
                         now = DateTime.Now
                     }, transaction);
         }
@@ -130,13 +153,13 @@ namespace doctor.Services
                     Proiomenorrea, Hipermenorrea, Dismenorrea, Dispareunia, Leucorrea, Lactorrea,
                     Amenorrea, Metrorragia, Otros, OtrosEspecifique, TienePareja, SexoPareja,
                     EstadoCivilPareja, GrupoRHPareja, FechaNacimientoPareja, OcupacionPareja,
-                    TelefonoPareja, nombrePareja, edadPareja)
+                    TelefonoPareja, nombrePareja, edadPareja, SexuallyActive)
                     values
                     (@consultId, @lastMenstruation, @gestas, @paragestas, @cesareans, @abortions,
                     @newlyBorn, @stillbirth, @ageActiveSexual, @menacma, @oligomenorrea,
                     @proiomenorrea, @hipermenorrea, @dismenorrea, @dispareunia, @leucorrea, @lactorrea,
                     @amenorrea, @metrorragia, @others, @specifyOthers, @hasPartner, @sex, @status,
-                    @rh, @birthdate, @occupation, @phone, @name, @age)",
+                    @rh, @birthdate, @occupation, @phone, @name, @age, @sexually)",
                     new
                     {
                         consultId = generalConsultId,
@@ -168,7 +191,8 @@ namespace doctor.Services
                         occupation = hasPartner ? consult.Partner.Occupation : null,
                         phone = hasPartner ? consult.Partner.Phone : null,
                         name = hasPartner ? consult.Partner.Name : null,
-                        age = hasPartner ? consult.Partner.Age : null
+                        age = hasPartner ? consult.Partner.Age : null,
+                        sexually = consult.SexuallyActive
                     }, transaction);
         }
         #endregion
@@ -198,7 +222,11 @@ namespace doctor.Services
                             Mass = 0,
                             Temperature = x.Temperatura,
                             BloodPressure_A = x.TensionArterial,
-                            BloodPressure_B = x.TensionArterialB
+                            BloodPressure_B = x.TensionArterialB,
+                            ReasonForConsultation = x.motivo,
+                            PhysicalExploration = x.SignosSintomas1,
+                            PreventiveMeasures = x.MedidasPreventivas,
+                            Observations = x.observaciones
                         },
                         PatientConsult = new PatientConsult
                         {
@@ -212,6 +240,7 @@ namespace doctor.Services
                         NewlyBorn = (int)x.GynecologyConsult.RecienNacidosVivos,
                         Stillbirth = (int)x.GynecologyConsult.mortinatos,
                         AgeOfOnsetOfActiveSexualLife = (int)x.GynecologyConsult.EdadInicioVidaSexual,
+                        SexuallyActive = x.GynecologyConsult.SexuallyActive ?? false,
                         Menacma = x.GynecologyConsult.menacma,
                         Checkbox = new Options
                         {
@@ -251,6 +280,11 @@ namespace doctor.Services
                         double mass = (double)(consult.BasicConsult.Weight / (consult.BasicConsult.Size * consult.BasicConsult.Size));
                         consult.BasicConsult.Mass = (float)Math.Round(mass, 2);
                     }
+
+                    consult.Diagnostics = new DiagnosticService().GetDiagnosticsByConsult(consultId);
+                    consult.Treatments = new TreatmentService().GetTreatmentsByConsult(consultId);
+                    consult.CabinetStudies = new StudiesService().GetCabinetStudies(consultId);
+                    consult.LaboratoryStudies = new StudiesService().GetLaboratoryStudies(consultId);
 
                     consult.MenarcaAge =
                         new PatientService().GetMenarcaAgeByPatientId(consult.PatientConsult.PatientId.Value);

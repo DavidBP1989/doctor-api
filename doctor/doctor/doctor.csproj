@@ -171,6 +171,7 @@
     <Compile Include="Database\ConsultaObstetricaRepository.cs" />
     <Compile Include="Database\ConsultasRepository.cs" />
     <Compile Include="Database\DatosTarjetaRepository.cs" />
+    <Compile Include="Models\Doctor\EspecialidadMedicaRepository.cs" />
     <Compile Include="Database\MedicoRepository.cs" />
     <Compile Include="Database\RegistroRepository.cs" />
     <Compile Include="Models\Auth\AuthModel.cs" />

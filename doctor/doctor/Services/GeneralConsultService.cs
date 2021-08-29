@@ -138,16 +138,16 @@ namespace doctor.Services
                         headc = consult.HeadCircuference,
                         heart = consult.HeartRate,
                         breathing = consult.BreathingFrecuency,
-                        reason = consult.ReasonForConsultation,
-                        exploration = consult.PhysicalExploration,
-                        measures = consult.PreventiveMeasures,
-                        observations = consult.Observations,
+                        reason = consult.BasicConsult.ReasonForConsultation,
+                        exploration = consult.BasicConsult.PhysicalExploration,
+                        measures = consult.BasicConsult.PreventiveMeasures,
+                        observations = consult.BasicConsult.Observations,
                         now,
                         pronostic = consult.Prognostic != null ? string.Join("|", consult.Prognostic) : ""
                     }, transaction);
         }
 
-        private int InsertComplement(ref IDbConnection db, ref IDbTransaction transaction, string tableName,
+        public int InsertComplement(ref IDbConnection db, ref IDbTransaction transaction, string tableName,
             int doctorId, int patientId, int consultId, DateTime now, List<Format> complement)
         {
             return db.Execute(@"
@@ -186,7 +186,11 @@ namespace doctor.Services
                                 Mass = 0,
                                 Temperature = x.Temperatura,
                                 BloodPressure_A = x.TensionArterial,
-                                BloodPressure_B = x.TensionArterialB
+                                BloodPressure_B = x.TensionArterialB,
+                                ReasonForConsultation = x.motivo,
+                                PhysicalExploration = x.SignosSintomas1,
+                                PreventiveMeasures = x.MedidasPreventivas,
+                                Observations = x.observaciones
                             },
                             PatientConsult = new PatientConsult
                             {
@@ -196,12 +200,9 @@ namespace doctor.Services
                             HeadCircuference = x.perimetroCefalico,
                             HeartRate = x.FrecuenciaCardiaca,
                             BreathingFrecuency = x.FrecuenciaRespiratoria,
-                            ReasonForConsultation = x.motivo,
-                            PhysicalExploration = x.SignosSintomas1,
-                            PreventiveMeasures = x.MedidasPreventivas,
-                            Observations = x.observaciones,
                             _Prognostic = x.Pronostico
                         }).FirstOrDefault();
+
                 if (consult != null)
                 {
                     if (consult.BasicConsult.Size % 1 == 0)
