@@ -327,10 +327,16 @@ namespace doctor.Services
                         r.TelefonoCel as CellPhone,
                         r.CodigoPostal as PostalCode,
                         r.idEstado as State,
+                        e.Nombre StateName,
                         r.idCiudad as City,
-                        r.CURP
+                        c.Nombre as CityName,
+                        r.CURP,
+                        em.Name as MedicalSpecialityName
                         from Registro r
                         inner join Medico m on r.idRegistro = m.IdRegistro
+                        left join Estados e on e.idEstado = r.idEstado
+						left join Ciudades c on c.idciudad = r.idCiudad
+                        left join EspecialidadMedica em on em.Id = m.EspecialidadMedica
                         where m.Idmedico = @doctorId",
                         new
                         {

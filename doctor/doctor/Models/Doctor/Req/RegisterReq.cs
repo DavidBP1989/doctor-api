@@ -17,6 +17,7 @@
         public string NameStateSchool { get; set; }
         public string NameStateGrouping { get; set; }
         public int? MedicalSpeciality { get; set; }
+        public string MedicalSpecialityName { get; set; }
         public string SubmedicalSpeciality { get; set; }
 
         //domicilio
@@ -24,7 +25,9 @@
         public string Colony { get; set; }
         public string PostalCode { get; set; }
         public string State { get; set; }
+        public string StateName { get; set; }
         public string City { get; set; }
+        public string CityName { get; set; }
         public string OfficePhone { get; set; }
         public string OfficeAddress { get; set; }
 
