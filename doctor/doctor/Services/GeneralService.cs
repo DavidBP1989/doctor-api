@@ -48,22 +48,20 @@ namespace doctor.Services
             }
         }
 
-        public ForgotPassword ForgotPassword(string emeci)
+        public ForgotPassword ForgotPassword(string email)
         {
             using (IDbConnection db = new SqlConnection(connection))
             {
                 db.Open();
 
-                return db.Query<ForgotPassword>(@"
-                    select Emails as Email,
+                return db.Query<ForgotPassword>($@"
+                    select emails as Email,
                     clave as Password,
-                    (Nombre + ' ' + Apellido) as DoctorName
-                    from Registro
-                    where Emeci = @emeci and Status = 'V'",
-                    new
-                    {
-                        emeci
-                    }).FirstOrDefault();
+                    (nombre + ' ' + apellido) as DoctorName
+                    from registro
+                    where emails like '%{email}%' and
+                    status = 'V' and
+                    tipo = 'M'").FirstOrDefault();
             }
         }
 

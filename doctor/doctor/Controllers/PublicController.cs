@@ -45,20 +45,16 @@ namespace doctor.Controllers
 
 
         [HttpGet]
-        [Route("forgotpwd/{emeci}")]
-        public BasicResponse ForgotPassword(string emeci)
+        [Route("forgotpwd/{email}")]
+        public BasicResponse ForgotPassword(string email)
         {
-            var fp = generalService.ForgotPassword(emeci);
+            var fp = generalService.ForgotPassword(email);
             var result = new BasicResponse();
 
             if (fp != null && !string.IsNullOrEmpty(fp.Password) && !string.IsNullOrEmpty(fp.Email))
             {
                 result.IsSuccess = true;
                 var emailService = new EmailService(fp.Email);
-                //Task.Run(async () =>
-                //{
-                //    await emailService.SendForgotPassword(fp);
-                //});
                 emailService.SendForgotPassword(fp);
             }
             return result;

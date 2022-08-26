@@ -32,19 +32,15 @@ namespace doctor.Providers
             {
                 db.Open();
 
-                var query = db.Query<AuthModel>(@"
+                var query = db.Query<AuthModel>($@"
                         select r.Emeci, m.Idmedico as DoctorId from
-                        Registro as r
-                        inner join Medico as m on r.idRegistro = m.IdRegistro
+                        registro as r
+                        inner join medico as m on r.idRegistro = m.IdRegistro
                         where
-                        r.Emeci = @user and
-                        r.clave = @password and
-                        r.Status = 'V'",
-                        new
-                        {
-                            user = context.UserName,
-                            password = context.Password
-                        }).FirstOrDefault();
+                        r.emails like '%{context.UserName}%' and
+                        r.clave = '{context.Password}' and
+                        r.status = 'V' and
+                        r.tipo = 'M'").FirstOrDefault();
 
                 if (query != null)
                 {
