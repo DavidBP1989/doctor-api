@@ -331,7 +331,12 @@ namespace doctor.Services
                         r.idCiudad as City,
                         c.Nombre as CityName,
                         r.CURP,
-                        em.Name as MedicalSpecialityName
+                        em.Name as MedicalSpecialityName,
+                        (
+                            select count(1)
+                            from DoctorsByAssociation
+                            where DoctorId = @doctorId
+                        ) as IsAssociation
                         from Registro r
                         inner join Medico m on r.idRegistro = m.IdRegistro
                         left join Estados e on e.idEstado = r.idEstado
@@ -345,7 +350,7 @@ namespace doctor.Services
             }
         }
 
-        public IEnumerable<DoctorsList> GetListOfDoctorByAssociation(int associationId)
+        public IEnumerable<DoctorsList> GetListOfDoctorByAssociation(string associationId)
         {
             IEnumerable<DoctorsList> result = Enumerable.Empty<DoctorsList>();
             using (IDbConnection db = new SqlConnection(connection))

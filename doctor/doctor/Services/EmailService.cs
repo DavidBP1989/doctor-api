@@ -11,7 +11,7 @@ namespace doctor.Services
 {
     public class EmailService
     {
-        private const string Bcc = "bustamante24.1989@gmail.com";
+        private const string Bcc = "javier@emeci.com";
         public string To { get; set; }
         public EmailService(string to)
         {

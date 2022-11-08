@@ -37,6 +37,13 @@ namespace doctor.Controllers
             return result.Item2;
         }
 
+        [Route("assoc/{doctorId:Int}")]
+        [HttpGet]
+        public async Task<IEnumerable<PatientAssociation>> GetListOfPatientsByAssociation(int doctorId, string filter)
+        {
+            return await service.GetListOfPatientsByAssociationAsync(doctorId, filter ?? "");
+        }
+
 
         [Route("byId/{patientId:Int}")]
         [HttpGet]

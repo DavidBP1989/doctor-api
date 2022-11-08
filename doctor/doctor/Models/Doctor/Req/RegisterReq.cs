@@ -38,5 +38,8 @@
 
         //estados
         public string JsonStateList { get; set; }
+
+        //
+        public bool IsAssociation { get; set; }
     }
 }

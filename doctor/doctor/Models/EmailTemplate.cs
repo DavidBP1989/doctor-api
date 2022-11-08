@@ -19,7 +19,8 @@ namespace doctor.Models
         {
             forgotPwd,
             doctorRegister,
-            patientRegister
+            patientRegister,
+            test
         }
 
         public string Title { get; set; }

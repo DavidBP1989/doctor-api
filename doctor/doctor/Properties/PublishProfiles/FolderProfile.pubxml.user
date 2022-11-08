@@ -5,7 +5,8 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>D:\DAVID\EMECI\PROJECTS\doctor-api-published</_PublishTargetUrl>
-    <History>True|2022-04-22T02:36:13.9171147Z;True|2021-08-29T11:40:26.9126098-05:00;True|2021-08-03T21:56:38.1216836-05:00;True|2021-08-03T11:18:53.6562841-05:00;True|2021-08-02T10:22:39.0361852-05:00;True|2021-07-21T22:50:10.7939105-05:00;True|2021-07-21T12:34:40.1992893-05:00;</History>
+    <History>True|2022-11-08T06:50:14.0231392Z;True|2022-10-06T22:27:16.2419159-05:00;True|2022-10-05T23:25:35.9123869-05:00;True|2022-10-05T22:28:14.0269766-05:00;True|2022-09-13T18:44:50.9799516-05:00;True|2022-08-26T22:53:06.9969565-05:00;True|2022-08-26T22:50:57.8886622-05:00;True|2022-04-21T21:36:13.9171147-05:00;True|2021-08-29T11:40:26.9126098-05:00;True|2021-08-03T21:56:38.1216836-05:00;True|2021-08-03T11:18:53.6562841-05:00;True|2021-08-02T10:22:39.0361852-05:00;True|2021-07-21T22:50:10.7939105-05:00;True|2021-07-21T12:34:40.1992893-05:00;</History>
+    <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/BouncyCastle.Crypto.dll">
@@ -15,10 +16,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/17/2020 09:58:48</publishTime>
     </File>
     <File Include="bin/doctor.dll">
-      <publishTime>04/21/2022 21:36:10</publishTime>
+      <publishTime>11/08/2022 00:50:11</publishTime>
     </File>
     <File Include="bin/doctor.pdb">
-      <publishTime>04/21/2022 21:36:10</publishTime>
+      <publishTime>11/08/2022 00:50:11</publishTime>
     </File>
     <File Include="bin/itextsharp.dll">
       <publishTime>08/27/2020 11:20:20</publishTime>
@@ -252,10 +253,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/09/2021 01:16:44</publishTime>
     </File>
     <File Include="Views/Emails/EmailTemplate.cshtml">
-      <publishTime>04/15/2021 01:35:10</publishTime>
+      <publishTime>08/27/2022 13:03:15</publishTime>
     </File>
     <File Include="Views/Emails/MainViews/ForgotPassword.cshtml">
       <publishTime>03/08/2021 00:04:25</publishTime>
+    </File>
+    <File Include="Views/Emails/MainViews/Prueba.cshtml">
+      <publishTime>08/27/2022 12:57:54</publishTime>
     </File>
     <File Include="Views/Emails/MainViews/Register.cshtml">
       <publishTime>04/08/2022 01:15:29</publishTime>
@@ -276,7 +280,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/07/2021 23:51:40</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/20/2021 16:51:31</publishTime>
+      <publishTime>05/10/2022 22:28:13</publishTime>
     </File>
   </ItemGroup>
 </Project>

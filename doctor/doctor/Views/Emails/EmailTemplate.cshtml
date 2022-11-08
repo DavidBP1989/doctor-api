@@ -34,6 +34,9 @@ Subject: @Html.Raw(Model.Subject)
                         url = "http://emeci.com/BienvenidaMailEMECI.jpg";
                         <img style="width:100%" src="@url" />
                         break;
+                    case doctor.Models.EmailTemplate.TypeEmail.test:
+                        <h5>CORREO DE PRUEBA</h5>
+                        break;
                 }
             </div>
         </div>

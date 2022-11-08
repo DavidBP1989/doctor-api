@@ -200,6 +200,7 @@
     <Compile Include="Models\Doctor\States.cs" />
     <Compile Include="Models\EmailTemplate.cs" />
     <Compile Include="Models\Patients\Patient.cs" />
+    <Compile Include="Models\Patients\PatientAssociation.cs" />
     <Compile Include="Models\Patients\Patients.cs" />
     <Compile Include="Models\Patients\Req\NewExistingPatientReq.cs" />
     <Compile Include="Models\Patients\Req\NewPatientReq.cs" />
@@ -237,6 +238,7 @@
     <Content Include="Views\Emails\MainViews\ForgotPassword.cshtml" />
     <Content Include="Views\Emails\MainViews\Register.cshtml" />
     <Content Include="Views\web.config" />
+    <Content Include="Views\Emails\MainViews\Prueba.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

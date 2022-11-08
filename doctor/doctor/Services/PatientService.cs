@@ -42,7 +42,7 @@ namespace doctor.Services
                     @page = _page,
                     itemsPerPage,
                     orderby
-                }, null, null, CommandType.StoredProcedure);
+                }, null, commandTimeout: 60, CommandType.StoredProcedure);
 
                 int totalRows = result.Read<int>().First();
 
@@ -50,6 +50,22 @@ namespace doctor.Services
                 foreach (var r in _result) r.AgeInMonths = AgeInMonths(r.BirthDate);
 
                 return new Tuple<int, IEnumerable<Patients>>(totalRows, _result);
+            }
+        }
+
+        public async Task<IEnumerable<PatientAssociation>> GetListOfPatientsByAssociationAsync(int doctorId, string filter)
+        {
+            using (IDbConnection db = new SqlConnection(connection))
+            {
+                db.Open();
+                var result = await db.QueryAsync<PatientAssociation>("spPatientListByAssociation", new
+                {
+                    doctorId,
+                    filter
+                }, null, null, CommandType.StoredProcedure);
+
+                foreach (var r in result) r.EdadEnMeses = AgeInMonths(r.FechaNacimiento);
+                return result;
             }
         }
 
@@ -197,11 +213,12 @@ namespace doctor.Services
 
         private int InsertPatient(ref IDbConnection db, ref IDbTransaction transaction, int registerId, NewPatientReq req)
         {
+            string patologia = req.ExternalRegister ? PathologicalHistory(req) : "";
             return db.QuerySingle<int>(@"
                     insert into Paciente
-                    (IdRegistro, Sexo, FechaNacimiento, NombreMadre, NombrePadre, AlergiaMedicina)
+                    (IdRegistro, Sexo, FechaNacimiento, NombreMadre, NombrePadre, AlergiaMedicina, Patologia)
                     values
-                    (@registerId, @sex, @birthDate, @mothersName, @fathersName, @allergies);
+                    (@registerId, @sex, @birthDate, @mothersName, @fathersName, @allergies, @patologia);
                     select cast(scope_identity() as int)",
                     new
                     {
@@ -210,7 +227,8 @@ namespace doctor.Services
                         birthDate = DateTime.Parse(req.BirthDate),
                         mothersName = req.MothersName,
                         fathersName = req.FathersName,
-                        allergies = req.Allergy
+                        allergies = req.Allergy,
+                        patologia
                     }, transaction);
         }
 
@@ -316,6 +334,28 @@ namespace doctor.Services
             memory.Position = 0;
 
             return memory;
+        }
+
+        string PathologicalHistory(NewPatientReq req)
+        {
+            string v = "";
+            if (req.ContagiousDiseases || req.Surgeries || req.Trauma || req.Other)
+            {
+                v = "Antecedentes patológicos";
+                if (req.ContagiousDiseases) v += "\n- Enfermedades contagiosas";
+                if (req.Surgeries) v += "\n- Cirugías";
+                if (req.Trauma) v += "\n- Traumatismos";
+                if (req.Other) v += "\n- Otros";
+            }
+
+            if (req.Alcohol || req.Tobacco || req.Drugs)
+            {
+                v += (v != "" ? "\n" : "") + "Toxicomanías";
+                if (req.Alcohol) v += "\n- Alcohol";
+                if (req.Tobacco) v += "\n- Tabaco";
+                if (req.Drugs) v += "\n- Drogas";
+            }
+            return v;
         }
         #endregion
 
